@@ -41,6 +41,6 @@ public class Movie {
         return title;
     }
     public String toString() {
-        return director;
+        return title;
     }
 }

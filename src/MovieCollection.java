@@ -30,7 +30,7 @@ public class MovieCollection {
             if (menuOption.equals("t")) {
                 searchTitles();
             } else if (menuOption.equals("c")) {
-//                searchCast();
+                searchCast();
             } else if (menuOption.equals("q")) {
                 System.out.println("Goodbye!");
             } else {
@@ -69,18 +69,19 @@ public class MovieCollection {
 
     private void searchTitles() {
         System.out.print("Enter a title search term: ");
-        String answer = scan.nextLine();
+        String answer = scan.nextLine().toLowerCase();
         sort(movieCollection);
         ArrayList<Movie> neededList = new ArrayList<Movie>();
         for (int i = 0; i < movieCollection.size(); i++) {
-            String currentName = movieCollection.get(i).getTitle();
+            String currentName = movieCollection.get(i).getTitle().toLowerCase();
             if (currentName.contains(answer)) {
                 neededList.add(movieCollection.get(i));
             }
         }
+//        System.out.println(neededList);
         if (neededList.size() > 0) {
             for (int i = 0; i < neededList.size(); i++) {
-                int count = 1;
+                int count = i + 1;
                 System.out.println(count + ". " + neededList.get(i).getTitle());
             }
             System.out.println("Which movie would you like to learn more about? ");
@@ -96,27 +97,105 @@ public class MovieCollection {
         } else {
             System.out.println("No movie titles match that search term!");
         }
-        start();
+        System.out.println("Please press enter to move on!");
+        String answer1 = scan.nextLine();
+        if (answer1.isEmpty()) {
+            start();
+        }
+    }
+
+    private void searchCast() {
+        System.out.println("Enter a person to search for (first or last name): ");
+        String answer = scan.nextLine().toLowerCase();
+        sort(movieCollection);
+        ArrayList<String> neededNames = new ArrayList<String>();
+        for (int i = 0; i < movieCollection.size(); i++) {
+            String[] cast = movieCollection.get(i).getCast().split("\\|");
+            for (int j = 0; j < cast.length; j++) {
+                String currentName = cast[j].toLowerCase();
+                if (currentName.contains(answer)) {
+                    neededNames.add(cast[j]);
+                }
+            }
+        }
+        if (neededNames.size() > 0) {
+//            for (int i = 0; i < neededNames.size(); i++) {
+//                for (int j = 1; j < neededNames.size(); j++) {
+//                    if (neededNames.get(i).equals(neededNames.get(j))) {
+//                        neededNames.remove(j);
+//                        j--;
+//                    }
+//                }
+//            }
+
+            for (int i = 0; i < neededNames.size(); i++) {
+                int count = i + 1;
+                System.out.println(count + ". " + neededNames.get(i));
+            }
+            System.out.println("Which would you like to see all the movies for?");
+            int answer1 = scan.nextInt();
+            scan.nextLine();
+            String neededPerson = neededNames.get(answer1 - 1);
+            ArrayList<Movie> neededCollection = new ArrayList<>();
+            for (int i = 0; i < movieCollection.size(); i++) {
+                String[] cast = movieCollection.get(i).getCast().split("\\|");
+                for (int j = 0; j < cast.length; j++) {
+                    String currentName = cast[i];
+                    if (currentName.equals(neededPerson)) {
+                        neededCollection.add(movieCollection.get(i));
+                    }
+                }
+            }
+            for (int i = 0; i < neededCollection.size(); i++) {
+                int count = i + 1;
+                System.out.println(count + ". " + neededCollection.get(i).getTitle());
+            }
+            System.out.println("Which movie would you like to learn more about? ");
+            System.out.print("Enter number: ");
+            int answer2 = scan.nextInt();
+            scan.nextLine();
+            System.out.println("Title: " + neededCollection.get(answer2 - 1).getTitle());
+            System.out.println("Runtime: " + neededCollection.get(answer2 - 1).getRuntime());
+            System.out.println("Directed by: " + neededCollection.get(answer2 - 1).getDirector());
+            System.out.println("Cast: " + neededCollection.get(answer2 - 1).getCast());
+            System.out.println("Overview: " + neededCollection.get(answer2 - 1).getOverview());
+            System.out.println("User rating: " + neededCollection.get(answer2 - 1).getRating());
+        } else {
+            System.out.println("No results match your result");
+        }
+        System.out.println("Please press enter to move on!");
+        String answer1 = scan.nextLine();
+        if (answer1.isEmpty()) {
+            start();
+        }
+
     }
 
     private static void sort(ArrayList<Movie> words) {
-        int count = 0;
-        for (int i = 1; i < words.size(); i++) {
-            int j = i;
-            System.out.println(words.get(j - 1).getTitle());
-            while (words.get(j - 1).getTitle().compareTo(words.get(j).getTitle()) > 0) {
-                Movie temp = words.get(j - 1);
-                words.set(j - 1, words.get(j));
-                words.set(j, temp);
-                j--;
-                count++;
-                if (j == 0) {
-                    break;
-                }
-
-
+//        for (int i = 1; i < words.size(); i++) {
+//            int j = i;
+//            while (words.get(j - 1).getTitle().compareTo(words.get(j).getTitle()) >= 0) {
+//                Movie temp = words.get(j - 1);
+//                words.set(j - 1, words.get(j));
+//                words.set(j, temp);
+//                j--;
+//
+//                if (j == 0) {
+//                    break;
+//                }
+//            }
+//        }
+        for (int j = 1; j < words.size(); j++) {
+            Movie temp1 = words.get(j);
+            String temp = words.get(j).getTitle();
+            int possibleIndex = j;
+            while (possibleIndex > 0 && temp.compareTo(words.get(possibleIndex - 1).getTitle()) < 0) {
+                words.set(possibleIndex, words.get(possibleIndex - 1));
+                possibleIndex--;
             }
+            words.set(possibleIndex, temp1);
         }
+
 
     }
 
