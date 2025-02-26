@@ -119,6 +119,7 @@ public class MovieCollection {
             }
         }
         if (neededNames.size() > 0) {
+            sort1(neededNames);
 //            for (int i = 0; i < neededNames.size(); i++) {
 //                for (int j = 1; j < neededNames.size(); j++) {
 //                    if (neededNames.get(i).equals(neededNames.get(j))) {
@@ -127,6 +128,15 @@ public class MovieCollection {
 //                    }
 //                }
 //            }
+            for (int i = 0; i < neededNames.size(); i++) {
+                for (int j = i + 1; j < neededNames.size(); j++) {
+                    if (neededNames.get(i).equals(neededNames.get(j))) {
+                        neededNames.remove(j);
+                        j--;
+                    }
+                }
+            }
+
 
             for (int i = 0; i < neededNames.size(); i++) {
                 int count = i + 1;
@@ -194,6 +204,20 @@ public class MovieCollection {
                 possibleIndex--;
             }
             words.set(possibleIndex, temp1);
+        }
+
+
+    }
+
+    private static void sort1(ArrayList<String> words) {
+        for (int j = 1; j < words.size(); j++) {
+            String temp = words.get(j);
+            int possibleIndex = j;
+            while (possibleIndex > 0 && temp.compareTo(words.get(possibleIndex - 1)) < 0) {
+                words.set(possibleIndex, words.get(possibleIndex - 1));
+                possibleIndex--;
+            }
+            words.set(possibleIndex, temp);
         }
 
 
