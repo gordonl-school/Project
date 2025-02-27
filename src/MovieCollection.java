@@ -33,6 +33,7 @@ public class MovieCollection {
                 searchCast();
             } else if (menuOption.equals("q")) {
                 System.out.println("Goodbye!");
+                break;
             } else {
                 System.out.println("Invalid choice!");
             }
@@ -47,7 +48,7 @@ public class MovieCollection {
         //  note that this method gets called immediately at the start of the "start" method;
         //  you only need to read the data in one time to populate the shoppingList arraylist
         try {
-            File myFile = new File("src\\movies_data.csv");
+            File myFile = new File("src//movies_data.csv");
             Scanner fileScanner = new Scanner(myFile);
             fileScanner.nextLine();
             while (fileScanner.hasNext()) {
@@ -150,12 +151,13 @@ public class MovieCollection {
             for (int i = 0; i < movieCollection.size(); i++) {
                 String[] cast = movieCollection.get(i).getCast().split("\\|");
                 for (int j = 0; j < cast.length; j++) {
-                    String currentName = cast[i];
+                    String currentName = cast[j];
                     if (currentName.equals(neededPerson)) {
                         neededCollection.add(movieCollection.get(i));
                     }
                 }
             }
+            System.out.println(neededCollection);
             for (int i = 0; i < neededCollection.size(); i++) {
                 int count = i + 1;
                 System.out.println(count + ". " + neededCollection.get(i).getTitle());
@@ -174,8 +176,8 @@ public class MovieCollection {
             System.out.println("No results match your result");
         }
         System.out.println("Please press enter to move on!");
-        String answer1 = scan.nextLine();
-        if (answer1.isEmpty()) {
+        String answer3 = scan.nextLine();
+        if (answer3.isEmpty()) {
             start();
         }
 
