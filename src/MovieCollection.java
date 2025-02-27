@@ -34,6 +34,7 @@ public class MovieCollection {
                 searchCast();
             } else if (menuOption.equals("q")) {
                 System.out.println("Goodbye!");
+                return;
             } else {
                 System.out.println("Invalid choice!");
             }
@@ -97,10 +98,10 @@ public class MovieCollection {
             System.out.println("No movie titles match that search term!");
         }
         System.out.println("Please press enter to move on!");
-        String answer1 = scan.nextLine();
-        if (answer1.isEmpty()) {
-            start();
-        }
+        scan.nextLine();
+//        if (answer1.isEmpty()) {
+//            start();
+//        }
     }
 
     private void searchCast() {
@@ -174,10 +175,10 @@ public class MovieCollection {
             System.out.println("No results match your result");
         }
         System.out.println("Please press enter to move on!");
-        String answer3 = scan.nextLine();
-        if (answer3.isEmpty()) {
-            start();
-        }
+        scan.nextLine();
+//        if (answer3.isEmpty()) {
+//            start();
+//        }
 
     }
 
