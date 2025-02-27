@@ -14,6 +14,7 @@ public class MovieCollection {
     }
 
     public void start() {
+        movieCollection.clear();
         readData();  // read data in from the file
 
         System.out.println("Welcome to the movie collection!");
@@ -33,13 +34,10 @@ public class MovieCollection {
                 searchCast();
             } else if (menuOption.equals("q")) {
                 System.out.println("Goodbye!");
-                break;
             } else {
                 System.out.println("Invalid choice!");
             }
         }
-
-        System.out.println("Goodbye!");
     }
 
 
